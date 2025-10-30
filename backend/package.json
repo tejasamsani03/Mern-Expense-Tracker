@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "build": "tsc",
     "dev": "nodemon index.js"
   },
   "keywords": [],
