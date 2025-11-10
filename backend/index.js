@@ -13,7 +13,11 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// Use more specific CORS options for security
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  optionsSuccessStatus: 200
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => {
