@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import apiFetch from "../axios";
 
 const AuthForm = () => {
@@ -7,6 +8,7 @@ const AuthForm = () => {
   const [formData, setFormData] = useState({ name: "", mobile: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,8 +21,9 @@ const AuthForm = () => {
           method: "POST",
           body: JSON.stringify({ mobile, password }),
         });
-        alert(`Login successful! Welcome back.`);
+        alert(data.message || `Login successful! Welcome back.`);
         // You would typically handle the user data/token here
+        navigate('/dashboard');
       } else {
         const data = await apiFetch("/auth/register", {
           method: "POST",
