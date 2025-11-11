@@ -1,0 +1,21 @@
+# Dependencies
+/node_modules
+/frontend/node_modules
+/backend/node_modules
+
+# Environment Variables
+# Ignore all .env files, but not the example file
+.env
+.env.*
+!.env.example
+
+# Build output
+/dist
+/frontend/dist
+
+# Vite cache
+.vite/
+
+# Logs and misc
+npm-debug.log*
+.DS_Store

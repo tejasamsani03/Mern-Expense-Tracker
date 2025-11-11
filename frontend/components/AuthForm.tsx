@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import axios from "axios";
+import apiFetch from "../axios";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ mobile: "", password: "" });
@@ -10,12 +10,11 @@ const LoginPage = () => {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post(
-        // Use VITE_API_URL for the backend endpoint
-        `${import.meta.env.VITE_API_URL}/api/auth/login`,
-        formData
-      );
-      alert(res.data.message);
+      const data = await apiFetch("/auth/login", {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+      alert(data.message);
     } catch (err: any) {
       if (err.response) setError(err.response.data.message);
       else setError("Server error or invalid response.");
