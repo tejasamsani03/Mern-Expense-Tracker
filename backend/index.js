@@ -2,37 +2,28 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import connectDB from './config/db.js';
-import corsOptions from './config/corsOptions.js';
+import connectDB from './config/db.js'; // Ensure this file exists and connects to MongoDB
 import authRoutes from './routes/auth.js';
-import expenseRoutes from './routes/expenses.js';
-import userRoutes from './routes/users.js';
 
 dotenv.config();
-
-connectDB();
+connectDB(); // Uncomment to connect to MongoDB
 
 const app = express();
 
-// Use detailed CORS options from the config file
-app.use(cors(corsOptions));
-app.use(express.json()); // This was already here
-
-// Middleware to handle favicon.ico requests (from app.js)
-app.get('/favicon.ico', (req, res) => {
-    res.status(204).send();
+// Middleware
+app.use(express.json());
+app.use(cors({
+  // Using your frontend URL from the context
+  origin: ["https://mern-expense-tracker-87jg.onrender.com", "http://localhost:3000", "http://localhost:5173"],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+// Routes
+app.use("/api/auth", authRoutes);
+app.get("/", (req, res) => {
+  res.json({ message: "Backend live ✅" });
 });
 
-// Root route (already here)
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
-
-// API routes (already here)
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/expenses', expenseRoutes);
-app.use('/api/v1/user', userRoutes);
-
+// Start server
 const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));

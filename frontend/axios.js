@@ -1,17 +1,17 @@
 const getBaseURL = () => {
     // In Vite, `import.meta.env.PROD` is `true` for production builds.
     if (import.meta.env.PROD) {
-        // This comes from your .env.production file
-        return `${import.meta.env.VITE_API_URL}/api/v1`;
+        // This now comes from VITE_BACKEND_URL
+        return import.meta.env.VITE_BACKEND_URL;
     }
     // This is used for local development
-    return 'http://localhost:5000/api/v1';
+    return 'http://localhost:5000';
 };
 
 const API_BASE_URL = getBaseURL();
 
 const apiFetch = async (endpoint, options = {}) => {
-    const url = `${API_BASE_URL}${endpoint}`;
+    const url = `${API_BASE_URL}/api${endpoint}`; // Prepend /api to all requests
 
     const headers = {
         'Content-Type': 'application/json',
