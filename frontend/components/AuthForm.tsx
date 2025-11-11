@@ -3,7 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiFetch from "../axios";
 
-const AuthForm = () => {
+interface AuthFormProps {
+  onAuthSuccess: (user: any) => void; // Accept the callback function
+}
+
+const AuthForm: React.FC<AuthFormProps> = ({ onAuthSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ name: "", mobile: "", password: "" });
   const [error, setError] = useState("");
@@ -21,8 +25,8 @@ const AuthForm = () => {
           method: "POST",
           body: JSON.stringify({ mobile, password }),
         });
-        alert(data.message || `Login successful! Welcome back.`);
-        // You would typically handle the user data/token here
+        onAuthSuccess(data); // Call the function to update the global user state
+        // The navigation to dashboard will happen automatically now
         navigate('/dashboard');
       } else {
         const data = await apiFetch("/auth/register", {
