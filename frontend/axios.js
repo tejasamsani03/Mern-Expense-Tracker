@@ -2,10 +2,10 @@ const getBaseURL = () => {
     // In Vite, `import.meta.env.PROD` is `true` for production builds.
     if (import.meta.env.PROD) {
         // This comes from your .env.production file
-        return import.meta.env.VITE_API_URL;
+        return `${import.meta.env.VITE_API_URL}/api/v1`;
     }
     // This is used for local development
-    return 'http://localhost:5000';
+    return 'http://localhost:5000/api/v1';
 };
 
 const API_BASE_URL = getBaseURL();
