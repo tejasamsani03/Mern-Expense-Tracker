@@ -18,8 +18,8 @@ router.post('/register', async (req, res) => {
     await user.save();
     res.status(201).json({ success: true, message: 'User registered successfully!' });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ message: 'Server error' });
+    console.error("REGISTER ERROR:", err); // Log the full error object
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
 
@@ -41,8 +41,8 @@ router.post('/login', async (req, res) => {
     res.json({ success: true, token, user: { id: user._id, name: user.name } });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    console.error("LOGIN ERROR:", err); // Log the full error object
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
 
