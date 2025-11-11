@@ -3,21 +3,22 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js'; // Ensure this file exists and connects to MongoDB
+import morgan from 'morgan';
+import corsOptions from './config/corsOptions.js'; // Import corsOptions
 import authRoutes from './routes/auth.js';
 
 dotenv.config();
-connectDB(); // Uncomment to connect to MongoDB
+connectDB(); // Connect to MongoDB
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-  // Using your frontend URL from the context
-  origin: ["https://mern-expense-tracker-87jg.onrender.com", "http://localhost:3000", "http://localhost:5173"],
-  methods: ["GET", "POST"],
-  credentials: true
-}));
+
+// Add request logging for development
+app.use(morgan('dev'));
+
+app.use(cors(corsOptions)); // Use the imported corsOptions
 // Routes
 app.use("/api/auth", authRoutes);
 app.get("/", (req, res) => {

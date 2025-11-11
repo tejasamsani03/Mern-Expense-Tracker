@@ -30,8 +30,8 @@ const AuthForm = () => {
         setIsLogin(true); // Switch to login form after successful registration
       }
     } catch (err: any) {
-      // The custom apiFetch throws an error with a message property
-      setError(err.message || "An error occurred.");
+      // The custom apiFetch utility throws an error with a `message` property.
+      setError(err.message || "An unknown error occurred.");
     } finally {
       setLoading(false);
     }
