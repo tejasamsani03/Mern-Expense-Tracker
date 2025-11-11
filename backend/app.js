@@ -21,6 +21,11 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// Middleware to handle favicon.ico requests
+app.get('/favicon.ico', (req, res) => {
+    res.status(204).send();
+});
+
 // Routes (example)
 readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)));
 
