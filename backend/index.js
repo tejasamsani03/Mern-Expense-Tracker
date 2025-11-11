@@ -16,16 +16,22 @@ const app = express();
 
 // Use detailed CORS options from the config file
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json()); // This was already here
 
+// Middleware to handle favicon.ico requests (from app.js)
+app.get('/favicon.ico', (req, res) => {
+    res.status(204).send();
+});
+
+// Root route (already here)
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+// API routes (already here)
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/expenses', expenseRoutes);
 app.use('/api/v1/user', userRoutes);
-
 
 const PORT = process.env.PORT || 5000;
 
