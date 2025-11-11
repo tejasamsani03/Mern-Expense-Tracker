@@ -3,6 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';
+import corsOptions from './config/corsOptions.js';
 import authRoutes from './routes/auth.js';
 import expenseRoutes from './routes/expenses.js';
 import userRoutes from './routes/users.js';
@@ -13,11 +14,8 @@ connectDB();
 
 const app = express();
 
-// Use more specific CORS options for security
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  optionsSuccessStatus: 200
-}));
+// Use detailed CORS options from the config file
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get('/', (req, res) => {

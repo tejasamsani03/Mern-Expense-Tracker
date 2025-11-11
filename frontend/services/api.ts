@@ -1,5 +1,6 @@
 
-const API_URL = 'http://localhost:5000/api'; // Replace with your backend URL in production
+// Use environment variables to switch between local and production backend
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const getAuthHeaders = () => {
     const userString = localStorage.getItem('user');
